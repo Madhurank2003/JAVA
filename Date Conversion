@@ -1,0 +1,15 @@
+import java.util.*;
+public class Main{
+    public static void main(String [] args){
+        Scanner scan = new Scanner(System.in);
+        String [] lookUp = {"$", "January", "February","March","April","May", "June", "July", "August", "September", "October", "November", "December"};
+        System.out.println("Enter the Date in dd/mm/yyyy Format");
+        String readDate = scan.next();
+        String [] segments = readDate.split("/");
+        String day = segments[0];
+        String year = segments[2];
+        String month = lookUp[Integer.parseInt(segments[1])];
+        System.out.println("Converted Date Format");
+        System.out.println(day + " " + month + " " + year);
+    }
+}
