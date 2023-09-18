@@ -1,0 +1,29 @@
+//Reverse Words in A Sentence without built-in functions
+import java.util.*;
+
+public class Main
+{
+	public static void main(String[] args) {
+		System.out.println("Enter A Sentence");
+		Scanner scan = new Scanner(System.in);
+		//scan.nextLine();
+		String sentence = scan.nextLine();
+		String finalSentence = "";
+		int strLen = sentence.length();
+		int j=strLen-1;
+		while(j>=0){
+		    int i = j;
+		    while(i>=0 && sentence.charAt(i)!=' ')  i--;
+		    int last = i;
+		    i++;
+		    while(i<=j){
+		        finalSentence+=sentence.charAt(i);
+		        i++;
+		    }
+		    finalSentence+=' ';
+		    j= last-1;
+		}
+		System.out.println(finalSentence);
+		
+	}
+}
