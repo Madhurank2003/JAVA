@@ -1,0 +1,49 @@
+//Program to Demonstrate class
+
+import java.util.*;
+class Room{
+    int roomNo;
+    String roomType;
+    float roomArea;
+    public void getData(int roomNo,float roomArea,String roomType){
+        this.roomType = roomType;
+        this.roomArea = roomArea;
+        this.roomNo = roomNo;
+    }
+    
+    public void displayData(){
+        System.out.println("Room Number : " + roomNo);
+        System.out.println("Room Type   : " + roomType);
+        System.out.println("Room Area   : " + roomArea + " Sqft\n");
+    }
+    
+}
+
+public class Hotel{
+    public static void main(String []args){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter the Number of Rooms : ");
+        int numRooms = scan.nextInt();
+        Room [] hotel = new Room[numRooms];
+        int roomNo;
+        String roomType;
+        float roomArea;
+        for(int i=0;i<numRooms;i++){
+            System.out.println("\nEnter the Details of Room " + (i+1));
+            hotel[i] = new Room();
+            System.out.println("\nEnter Room Number : ");
+            roomNo  = scan.nextInt();
+            System.out.println("Enter Room Type   : ");
+            roomType = scan.next();
+            System.out.println("Enter Room Area   : ");
+            roomArea = scan.nextFloat();
+            hotel[i].getData(roomNo,roomArea,roomType);
+        }
+        
+        System.out.println("\nRoom Details\n");
+        for(int i=0;i<numRooms;i++){
+            hotel[i].displayData();
+        }
+        //System.out.println("End of Program");
+    }
+}
