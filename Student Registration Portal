@@ -1,0 +1,229 @@
+import java.util.Scanner; // Import Scanner Class
+
+class Student{
+    // Declaring USN as a Private member of Student
+    private String USN;
+    
+    //name as a Private member
+    private String name;
+    
+    // Parameterized Constructor with initial values for Name and USN
+    
+    Student(String USN, String name){
+        this.USN = USN;
+        this.name = name;
+    }
+    
+    
+    // Function to retrieve the USN of the Student
+    
+    public String getUSN(){
+        return USN;
+    }
+    
+    //Function to Set the USN of the Student
+    
+    public void setUSN(String USN){
+        this.USN = USN;
+    }
+    
+    //Function to retrieve the Name of the Student
+    
+    public String getName(){
+        return name;
+    }
+    
+    // Set the Name of the Student
+    
+    public void setName(String name){
+        this.name = name;
+    }
+    
+    
+    // Function to Display Student Data
+    public void displayData(){
+        System.out.println("Student USN    : " + USN);
+        System.out.println("Student Name   : " + name);
+    }
+    
+}
+
+
+class UGStudent extends Student{
+    
+    // Declaring semester and branch attributes as Private members
+    private int semester; 
+    private String branch;
+    
+    //Parameterized Constructor with all the attributes 
+    
+    UGStudent(String USN, String name, int semester, String branch){
+        super(USN,name); //calling the constructor of the Student Class to set the USN and Name 
+        this.semester  = semester;
+        this.branch = branch;
+    }
+    
+    // Retrieve semester 
+    public int getSemester(){
+        return semester;
+    }
+    
+    
+    // Set Semester
+    public void setSemester(int semester){
+        this.semester = semester;
+    }
+    
+    // Retrieve Branch
+    public String getBranch(){
+        return branch;
+    }
+    
+    
+    //Set Branch
+    public void setBranch(String branch){
+        this.branch = branch;
+    }
+    
+    
+    //Display Data
+    public void displayData(){
+        super.displayData(); // Display Name and USN from Student
+        System.out.println("Graduation     : " + "Under Graduate");
+        System.out.println("Branch         : " + getBranch());
+        System.out.println("Semester       : " + getSemester());
+    }
+
+}
+
+
+class PGStudent extends Student{
+    
+    //Declaring specialization and UGDegree as Private members
+    private String specialization;
+    private final String UGDegree;
+    
+    PGStudent(String USN, String name, String specialization, String UGDegree){
+        super(USN,name);
+        this.specialization = specialization;
+        this.UGDegree = UGDegree;
+    }
+    
+    public String getSpecialization(){
+        return specialization;
+    }
+    
+    public void setSpecialization(String specialization){
+        this.specialization  = specialization;
+    }
+    
+    
+    public String getUGDegree(){
+        return UGDegree;
+    }
+    
+    // Since we have set UGDegree as Final ,
+    //we cannot alter it using a method as it can be altered only when an Object is created(through constructor)
+    
+    
+    // public void setUGDegree(String UGDegree){
+    //     this.UGDegree = UGDegree;
+    //}
+    
+    
+    public void displayData(){
+        // System.out.println("Student USN    : " + super.getUSN());
+        // System.out.println("Student Name   : " + super.getName());
+        super.displayData();
+        System.out.println("Graduation     : " + "Post Graduate");
+        System.out.println("Specialization : " + getSpecialization());
+        System.out.println("UG Degree      : " + getUGDegree());
+    }
+    
+}
+
+
+public class StudentPortal{
+    public static void main(String [] args){
+        Scanner scan = new Scanner(System.in); // Declaring scan object of Scanner class to accept input from keyboard
+        System.out.println("---------------------------------------------------");
+        System.out.println("Course Registration Portal");
+        System.out.println("---------------------------------------------------");
+        System.out.println("Object Oriented Programming With Java (21IS4C03) ");
+        System.out.println("---------------------------------------------------");
+        System.out.println("Enter the Number of Students Registering for the Course ");
+        int numStudents = scan.nextInt();
+        
+        //Make Sure a Minimum of 10 Students records are entered 
+        while(numStudents<1) {
+        	System.out.println("Please Note, Course Registration Requiers a Minimum of 10 Students");
+        	System.out.println("\nEnter the Number of Students Registering for the Course ");
+        	numStudents = scan.nextInt();
+        }
+        
+        // Declare an Array of Student type
+        Student [] records = new Student[numStudents];
+        
+        System.out.println("Enter the Students Details");
+        
+        //Storing the Data of Each Student Iteratively 
+        for(int i=0;i<numStudents;i++){
+            
+        	System.out.println("\nEnter Details of Student " + (i+1));
+            System.out.println("\nEnter Graduation Level : UG/PG");
+            String type = scan.next();
+            
+            //Assuming the user may make a mistake while typing Ug/Pg, we convert it to lowercase letters
+            type = type.toLowerCase();
+            
+            if(type.contains("ug")){
+                System.out.println("Enter the USN of the Student");
+                String USN = scan.next();
+                System.out.println("Enter the Name of the Student");
+                scan.nextLine();
+                String name = scan.nextLine();
+                System.out.println("Enter the branch");
+                String branch = scan.nextLine();
+                System.out.println("Enter Semester");
+                int semester = scan.nextInt();
+                
+                // Using PolyMorphism feature we store an object of UGStudent in an Array of Students
+                records[i] = new UGStudent(USN,name,semester,branch); 
+                
+            }
+            else if(type.contains("pg")){
+                System.out.println("Enter the USN of the Student");
+                String USN = scan.next();
+                System.out.println("Enter the Name of the Student");
+                scan.nextLine();
+                String name = scan.nextLine();
+                System.out.println("Enter the Specialization");
+                String specialization = scan.nextLine();
+                System.out.println("Enter UGDegree");
+                String UGDegree = scan.nextLine();
+                
+                // Using PolyMorphism feature we store an object of PGStudent in an Array of Students
+                records[i] = new PGStudent(USN,name,specialization,UGDegree);
+            }
+            else {
+                // In case user enters an invalid input
+            	System.out.println("You Entered Invalid Choice, Please Enter a Valid Option");
+            	i--;
+            }
+        }
+        // Display the Details of Students Registered
+        System.out.println("\nStudents Registered : \n");
+        for(int i=0;i<numStudents;i++){
+            
+            // Function OverRiding to Call the displayData function of respective objects(PG/UG)
+            records[i].displayData();
+            
+            
+            System.out.println("\n");
+        }
+        
+        // Closing Scanner object 
+        scan.close();
+        
+    }
+}
